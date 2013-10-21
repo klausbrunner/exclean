@@ -1,0 +1,31 @@
+Name: ExClean
+Version: 0.4.5
+Author: Klaus Brunner
+WWW: http://klaus.e175.net/exclean
+
+ExClean is a skin for David Ekholm's excellent JAlbum photo gallery
+generator. The goal is to have a clear, simple and friendly appearance
+based on valid and modern structural markup. ExClean generates valid
+XHTML and CSS, and adds support for navigation with the LINK
+element. It is--quite intentionally--not as feature-packed as some
+other skins, instead I've tried to get the details right. If you like
+skins that don't clutter the screen with lots of stuff around the
+pictures themselves, you might like this one.
+
+Some of its non-obvious features, as found in some other skins:
+
+* supports header/footer include files (header.html, footer.html)
+
+* supports meta.properties files for each folder, making it
+  possible to override these variables:
+
+    title
+    description
+    parentIndexPage
+    authorName
+    allowIndexing
+    fixedShape
+    metaShowMode
+
+Note that this skin currently lacks decent support for subfolders and
+movies (it works, but it's ugly).

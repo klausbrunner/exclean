@@ -1,0 +1,165 @@
+/*
+ * Combined style sheet for the index pages and the slide pages.
+ * $Id: White.css,v 1.4 2004/10/24 09:35:31 brunner Exp $
+ */
+
+body {
+  background: #fff;
+  color: #000;
+  margin: 3em;
+  padding: 0;
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+  background-color : #fff;
+  overflow: visible;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  margin-bottom: 1ex;
+  text-align: center;
+  font-size: 110%;
+}
+
+#indexcontent {
+  margin-right: 10%;
+  margin-left: 10%;
+  margin-top: 3em;
+  padding: 3px;  /* remove this, and IE6 layout breaks */
+}
+
+/* index/thumbnails */
+
+/* fixed-position navigation icons */
+
+body>#sitenav {position: fixed} /* workaround for broken MSIE 6 */
+
+#sitenav {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 3em;
+  left: auto;
+  width: 45px;
+  right: 10px;
+  margin:0;
+  padding:0;
+  list-style-type:none;
+}
+
+#sitenav img {
+  margin: 0 0 2px 0;
+  padding: 0;
+  border: 1px solid #c9c9c9;
+}
+
+#sitenav img.inactive {
+/*  border:none; */
+}
+
+#sitenav a img:hover {
+  padding: 0;
+  border: 1px solid #0000ff;
+}
+
+/* album info (index page) */
+
+#albuminfo {
+  padding: 0 50px 1em 0;
+}
+
+#albuminfo h1 {
+  display:inline;
+}
+
+/* slide display */
+
+div.slide {
+  margin-top: 3em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#thumbnails div.slide {
+  margin: 3px;
+  float:left;
+}
+
+div.slide div.slideshadow {
+  background: #fff bottom right no-repeat;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+div.slide img {
+  background-color: #fafafa;
+  border: 1px solid #a9a9a9;
+  margin: -7px 0px 7px -8px;
+  padding: 20px;
+  position: relative;
+  vertical-align: bottom;
+}
+
+#thumbnails div.slide img {
+  padding: 10px;
+}
+
+div.slide p { 
+  padding-top:0.7ex;
+  padding-bottom:1ex;
+  text-align:center;
+  font-size: 90%;
+}
+
+#metadata {
+  margin-left:0; margin-top: 1ex; margin-bottom: 1ex;
+  visibility:hidden;
+  font-size: 80%;
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+}
+
+#metadata dl {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#metadata dd {
+  font-weight:bold;
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+#metadata dt {
+  text-transform:uppercase;
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/* misc. */
+
+.debug {
+  margin-top:3ex;
+  text-align:center;
+  font-size: 50%
+}
+
+@media print {
+   #sitenav, .debug { display: none; }
+}

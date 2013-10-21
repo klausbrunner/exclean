@@ -1,0 +1,50 @@
+/** 
+ * This script is being run when a skin is selected
+ * $Id: onload.bsh,v 1.2 2004/02/05 09:09:23 brunner Exp $
+ */
+ 
+import se.datadosen.component.*;
+
+String[] metaOptions = { "optional", "always", "never" };
+
+// Controls that are to be imported into JAlbum as variables
+ControlPanel ui = new ControlPanel() {
+
+   JTextField authorName = new JTextField("");
+   JComboBox language = new JComboBox(new Object[]
+		{ "en", "de" }
+   );
+
+   JCheckBox allowIndexing = new JCheckBox("Allow search engine robots to index the gallery", true);
+   JCheckBox fixedShape = new JCheckBox("Use fixed-shape thumbnails", true);
+ 
+   JComboBox metaShowMode = new JComboBox(metaOptions);
+
+};
+
+JScrollPane sp = new JScrollPane();
+
+ui.add("p", new JLabel("Name of author/photographer"));
+ui.authorName.setToolTipText("This should be the name of the primary author/photographer, e.g. 'John Doe' or 'Annie's Photo Shop'");
+ui.add("tab hfill", ui.authorName);
+
+ui.add("p", new JLabel("Language"));
+ui.language.setToolTipText("Use proper ISO-639 language codes, e.g. 'en' (English), 'de' (German), 'fr' (French) etc.");
+ui.add("tab hfill", ui.language);
+ui.language.setEditable(true);
+ui.language.setSelectedItem(System.getProperty("user.language"));
+
+
+
+ui.allowIndexing.setToolTipText("if unchecked, adds <META ROBOTS='noindex,noarchive'> to pages");
+ui.add("p", ui.allowIndexing);
+
+ui.fixedShape.setToolTipText("use fixed shapes for thumbnails (recommended)");
+ui.add("p", ui.fixedShape);
+
+ui.add("p", new JLabel("Show picture (EXIF) metadata?"));
+ui.metaShowMode.setToolTipText("'optional' requires JavaScript/DOM support");
+ui.add("tab hfill", ui.metaShowMode);
+
+// Finally install components into JAlbum
+window.setSkinUI(ui);

@@ -1,0 +1,78 @@
+<ja:include page="shared.bsh" /><% /* $Id: slide.htt,v 1.5 2004/02/05 11:47:32 brunner Exp $ */ %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"<ja:if exists="language"> lang="$language" xml:lang="$language"</ja:if>>
+ <head>
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=$textEncoding" />
+  <title>$title - $label</title>
+  <style type="text/css">@import "$stylePath";</style>
+  <script type="text/javascript" src="$resPath/scripts.js"></script>
+  <ja:if exists="previousPage"><link href="$previousPage" rel="prev" /></ja:if>
+  <ja:if exists="nextPage"><link href="$nextPage" rel="next" /></ja:if>
+  <ja:if exists="firstPage"><link href="$firstPage" rel="first" /></ja:if>
+  <ja:if exists="lastPage"><link href="$lastPage" rel="last" /></ja:if>
+  <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+  <ja:if test="<%= (comment!=void) && stringOK(comment)%>"><meta name="DC.description" content="<%= escapeString(comment) %>" /></ja:if>
+  <ja:if test="<%=stringOK(authorName)%>"><meta name="DC.creator" content="<%= escapeString(authorName) %>" /></ja:if>
+  <ja:if test="<%=allowIndexing%>"></ja:if><ja:else><meta name="robots" content="noindex,nofollow,noarchive" /></ja:else>
+  <link rel="index" href="../$indexPage" />
+ </head>
+ <!-- This album was generated with $generator using the $skin skin. -->
+ <body>
+  <ja:include page="header.html"/>
+  <div class="slide" style="width:<%= imageWidth + 42 %>px;">
+   <div class="slideshadow" style="background-image:url($resPath/dropshadow.png)">
+    <ja:if exists="originalPath">
+    <a href="$originalPath"><img src="$imagePath" width="$imageWidth" height="$imageHeight" alt="<ja:if test="<%= (comment!=void) && stringOK(comment)%>"><%=escapeString(comment)%></ja:if>" /></a></ja:if>
+    <ja:else><img src="$imagePath" width="$imageWidth" height="$imageHeight" alt="<ja:if test="<%= (comment!=void) && stringOK(comment)%>"><%=escapeString(comment)%></ja:if>" /></ja:else>
+   </div>
+
+   <p><ja:if test="<%=(comment!=void) && stringOK(comment)%>"><%=escapeString(comment)%></ja:if>&nbsp;</p>
+
+   <ja:if exists="resolution"><ja:if test="<%= !metaShowMode.equals("never") %>">
+   <div id="metadata"<ja:if test="<%= metaShowMode.equals("always") %>"> style="visibility:visible"</ja:if>>
+    <dl>
+
+     <ja:if exists="originalDate"><dt>$text.date:</dt><dd> $originalDate </dd></ja:if>
+
+     <ja:if exists="resolution"><dt>$text.resolution:</dt><dd> $resolution </dd></ja:if>
+
+     <ja:if test="<%= (meta != void) && (meta.get("Subject Distance") != null) %>"><dt>$text.focusDistance:</dt><dd> <%= meta.get("Subject Distance") %> </dd></ja:if>
+
+     <ja:if exists="exposureTime"><dt>$text.exposureTime:</dt><dd> $exposureTime </dd></ja:if>
+
+     <ja:if exists="aperture"><dt>$text.aperture:</dt><dd> $aperture </dd></ja:if>
+
+     <ja:if test="<%= (meta != void) && (meta.get("Focal Length in 35mm Film") != null) %>">
+       <dt>$text.focalLength (35mm):</dt><dd> <%= meta.get("Focal Length in 35mm Film") %> </dd>
+     </ja:if>
+     <ja:else>
+       <ja:if test="<%= (meta != void) && (meta.get("Focal Length") != null)%>"><dt>$text.focalLength:</dt><dd> <%= meta.get("Focal Length") %> </dd></ja:if>
+     </ja:else>
+
+     <ja:if test="<%= (meta != void) && (meta.get("ISO Speed Ratings") != null) %>"><dt>ISO:</dt><dd> <%= meta.get("ISO Speed Ratings") %> </dd></ja:if>
+
+     <ja:if exists="flash"><dt>$text.flash:</dt>
+     <dd lang="en"> 
+       <%= (meta != void) ? meta.get("Flash") : ""%>
+     </dd></ja:if>
+
+     <ja:if exists="cameraMake"><dt>$text.camera:</dt><dd> $cameraMake ($cameraModel) </dd></ja:if>
+
+    </dl>
+   </div>
+   <ja:if test="<%= metaShowMode.equals("optional") %>">
+    <script type="text/javascript">showMetadataAccordingToCookie()</script>
+   </ja:if>
+   </ja:if></ja:if>
+  </div>
+
+  <ul id="sitenav">
+    <li><a href="../$indexPage" title="$text.indexPage"><img src="$resPath/up-small.png" alt="$text.indexPage" /></a></li>
+    <li><ja:if exists="previousPage"><a href="$previousPage" title="$text.previousPage"><img src="$resPath/left-small.png" alt="$text.previousPage" /></ja:if><ja:else><img class="inactive" src="$resPath/blank-small.png" alt="" /></ja:else><ja:if exists="previousPage"></a></ja:if></li>
+    <li><ja:if exists="nextPage"><a href="$nextPage" title="$text.nextPage"><img src="$resPath/right-small.png" alt="$text.nextPage" /></ja:if><ja:else><img class="inactive" src="$resPath/blank-small.png" alt="" /></ja:else><ja:if exists="nextPage"></a></ja:if></li>
+   <ja:if test="<%= metaShowMode.equals("optional") %>"><ja:if exists="resolution"><li><a href="#" onclick="toggleMetadataVisibility();return false;" title="$text.toggleMetadata"><img id="metadataToggle" src="$resPath/info-small.png" alt="" /></a></li></ja:if></ja:if>
+  </ul>
+
+  <ja:if test="$addValidationLinks"><div class="debug"><a href="http://validator.w3.org/check/referer">Check HTML</a></div></ja:if>
+ </body>
+ <ja:include page="footer.html"/>
+</html>

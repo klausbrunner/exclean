@@ -1,0 +1,54 @@
+<ja:include page="shared.bsh" /><%
+  /* $Id: index.htt,v 1.4 2004/02/05 12:21:45 brunner Exp $ */
+  import se.datadosen.util.*;
+
+  String parentIndexPage = "";
+  readMetaProps();
+%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"<ja:if exists="language"> lang="$language" xml:lang="$language"</ja:if>>
+ <head>
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=$textEncoding" />
+  <title><% createTitle(); %></title>
+  <style type="text/css">@import "$stylePath";</style>
+  <style type="text/css">#thumbnails div.slideshadow { background-image:url($resPath/dropshadow.png); }</style>
+  <ja:if test="<%=stringOK(parentIndexPage)%>"><link href="<%=parentIndexPage%>" rel="up" /></ja:if>
+  <ja:if exists="previousIndexPage"><link href="$previousIndexPage" rel="prev" /></ja:if>
+  <ja:if exists="nextIndexPage"><link href="$nextIndexPage" rel="next" /></ja:if>
+  <ja:if exists="firstIndexPage"><link href="$firstIndexPage" rel="first" /></ja:if>
+  <ja:if exists="lastIndexPage"><link href="$lastIndexPage" rel="last" /></ja:if>
+  <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+  <ja:if test="<%=(description!=void) && stringOK(description)%>"><meta name="DC.description" content="<%= escapeString(description) %>"/></ja:if>
+  <ja:if test="<%= (authorName != void) && stringOK(authorName)%>"><meta name="DC.creator" content="<%= escapeString(authorName) %>" /></ja:if>
+  <ja:if test="<%=allowIndexing%>"></ja:if><ja:else><meta name="robots" content="noindex,noarchive" /></ja:else>
+ </head>
+<!-- This album was generated with $generator using the $skin skin. -->
+<body>
+ <ja:include page="header.html"/>
+   <%
+     int slideWidth = (((fixedShape != void) && fixedShape) ? ($maxThumbWidth) : ($thumbWidth)) + 22;
+   %>
+   <div id="albuminfo">
+     <h1><%=title%></h1>
+     <p><ja:if test="<%=(description!=void) && stringOK(description)%>"><%=escapeString(description)%></ja:if> ($totalAlbumImages $text.images)</p>
+   </div>
+   <div id="thumbnails">
+      <ja:rowiterator><ja:coliterator>
+       <div class="slide" style="width:<%= slideWidth %>px;">
+         <div class="slideshadow"><a href="$closeupPath" title="<%= comment!=void?comment:"" %>"><img src="$thumbPath" width="<%= ((fixedShape != void) && fixedShape) ? ($maxThumbWidth) : ($thumbWidth) %>" height="<%= ((fixedShape != void) && fixedShape) ? ($maxThumbHeight) : ($thumbHeight) %>" alt="<%= comment!=void?comment:"" %>" /></a>
+         </div>
+        </div>
+      </ja:coliterator></ja:rowiterator>
+   </div>
+
+   <% // ---------------------------------------- site navigation ----------------------- %>
+
+   <ul id="sitenav">
+     <li><ja:if test="<%=stringOK(parentIndexPage)%>"><a href="<%=parentIndexPage%>" title="$text.up"><img src="$resPath/up-small.png" alt="$text.up" /></ja:if><ja:else><img class="inactive" src="$resPath/blank-small.png" alt="" /></ja:else><ja:if test="<%=stringOK(parentIndexPage)%>"></a></ja:if></li>
+     <li><ja:if exists="previousIndexPage"><a href="$previousIndexPage" title="$text.previousPage"><img src="$resPath/left-small.png" alt="$text.previousPage" /></ja:if><ja:else><img class="inactive" src="$resPath/blank-small.png" alt="" /></ja:else><ja:if exists="previousIndexPage"></a></ja:if></li>
+    <li><ja:if exists="nextIndexPage"><a href="$nextIndexPage" title="$text.nextPage"><img src="$resPath/right-small.png" alt="$text.nextPage" /></ja:if><ja:else><img class="inactive" src="$resPath/blank-small.png" alt="" /></ja:else><ja:if exists="nextIndexPage"></a></ja:if></li>
+  </ul>
+  <ja:if test="$addValidationLinks"><div class="debug"><a href="http://validator.w3.org/check/referer">Check HTML</a></div></ja:if>
+
+ <ja:include page="footer.html"/>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<% /* $Id: shared.bsh,v 1.5 2004/02/05 12:21:45 brunner Exp $ */
+
+/* readMetaProps: allows to override variables for each folder */
+boolean readMetaProps() {
+  File propsFile = new File(imageDirectory, "meta.properties");
+  if (propsFile.exists()) {
+    Properties props = IO.readPropertyFile(propsFile);
+    String readProp;
+    if ((readProp=props.get("title")) != null) title = readProp;
+    if ((readProp=props.get("albumInfo")) != null) albumInfo = readProp; 
+    if ((readProp=props.get("parentIndexPage")) != null) parentIndexPage = readProp;
+    if ((readProp=props.get("authorName")) != null) authorName = readProp;
+    if ((readProp=props.get("allowIndexing")) != null) allowIndexing = readProp;
+    if ((readProp=props.get("fixedShape")) != null) fixedShape = readProp;
+    if ((readProp=props.get("metaShowMode")) != null) metaShowMode = readProp;
+    return true;
+  }
+  else
+     return false;
+}
+
+/* HTML-escape characters like less-than or quotation marks */
+String escapeString(String input) {
+   int len = input.length();
+   StringBuffer result = new StringBuffer(len);
+   for(int i=0; i<len; i++) {
+      switch(input.charAt(i)) {
+         case '\"': result.append("&quot;"); break;
+         case '\'' : result.append("&#x27;"); break;
+         case '&' : result.append("&amp;"); break;
+         case '<' : result.append("&lt;"); break;
+         default:   result.append(input.charAt(i));
+      }
+   }
+   return result.toString();
+}
+
+
+/* create page navigation list for index page */
+void createPageLinks(String pageString) {
+    if (totalIndexes == void) totalIndexes = 1;
+    out.print("<ul id=\"navtabs\">");
+    for (i=1; i<=totalIndexes; i++) {
+      String indexLink = engine.getIndexPageName() + (i==1 ? "" : i) + engine.getPageExtension();
+      if (i == indexNum) 
+         out.print("<li><a title=\"" + pageString + " " + i + "\" class=\"current\" href=\"" + indexLink + "\">" + i + "</a></li>"); // current
+      else
+         out.print("<li><a title=\"" + pageString + " " + i + "\" href=\"" + indexLink + "\">" + i + "</a></li>");
+    }
+    out.println("</ul>");
+  }
+
+/* create title string for index page */
+void createTitle() {
+     out.print(title);
+
+     if ((totalIndexes != void) && (totalIndexes > 1))
+        out.print(" (" + indexNum + " / " + totalIndexes + ")");
+  }
+
+/* emulate "exists test" for shadow variables */
+boolean stringOK(String s) {
+   return (s != null) && (s.length() > 0);
+}
+
+/* flash used or not? */
+boolean flashUsed(int flashCode) {
+   return (flashCode > 0) && ((flashCode & 1) == 1); // check LSB
+}
+
+%>
